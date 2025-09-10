@@ -3,9 +3,12 @@ from django.conf import settings
 from .forms import ChatForm
 from .models import Conversation
 from openai import OpenAI
+from django.contrib.auth.decorators import login_required
+# login_required is a "decorator" that makes sure only logged-in users can access a view
 
 # create your views here.
 
+@login_required  # This line means "only logged-in users can access this view"
 def chatbot(request):
     if request.method == 'POST':
         form = ChatForm(request.POST)
@@ -39,11 +42,13 @@ def chatbot(request):
 
 
 
-                # Save the conversation
+                # Save conversation with user information
                 # This is an ORM = Object-Relational-Mapping, which is a translator between Python and database. We write python, Django convert it to SQL
         
                 # Our input
                 Conversation.objects.create(
+                    # request.user is the currently logged-in use
+                    user = request.user, 
                     user_input=user_input,
                     bot_response=bot_response
                 )
@@ -51,6 +56,10 @@ def chatbot(request):
                 # INSERT INTO chatbot_conversation (user_input, bot_response, timestamp) 
                 # VALUES ('Hello', 'Hi there!', '2025-01-15 10:30:00');
                 
+                # Only show conversations from this user
+                user_conversation = Conversation.objects.filter(
+                    user = request.user # Only get conversation from current user 
+                    ).order_by('-timestamp')[:5] # Get last 5 conversations
 
 
                 # Returning the response to user 
@@ -59,7 +68,7 @@ def chatbot(request):
                     'form': ChatForm(),   # Creates a new, empty form
                     'user_input': user_input,
                     'bot_response': bot_response,
-                    'conversations': Conversation.objects.all().order_by('-timestamp')[:5]  #  1-Get ALL conversations from database 2-Sort by timestamp, newest first 3-Take only the first 5 (most recent 5)
+                    'conversations': user_conversation
                 })
             
             # If an error occure and anything goes wrong, jump here, into except block
@@ -74,7 +83,10 @@ def chatbot(request):
     else:
         form = ChatForm()
     
+    # Show user's previous conversations
+    user_conversations = Conversation.objects.filter(user=request.user).order_by('-timestamp')[:5]
+
     return render(request, 'chatbot/chat.html', {
         'form': form,
-        'conversations': Conversation.objects.all().order_by('-timestamp')[:5]
+        'conversations': user_conversation
     })
