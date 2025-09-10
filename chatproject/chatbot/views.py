@@ -68,7 +68,7 @@ def chatbot(request):
                     'form': ChatForm(),   # Creates a new, empty form
                     'user_input': user_input,
                     'bot_response': bot_response,
-                    'conversations': user_conversation
+                    'conversations': user_conversations
                 })
             
             # If an error occure and anything goes wrong, jump here, into except block
@@ -88,5 +88,5 @@ def chatbot(request):
 
     return render(request, 'chatbot/chat.html', {
         'form': form,
-        'conversations': user_conversation
+        'conversations': user_conversations
     })
