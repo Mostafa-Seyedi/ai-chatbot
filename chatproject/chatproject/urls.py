@@ -16,8 +16,16 @@ Including another URLconf
 """
 from django.contrib import admin
 from django.urls import path, include
+from chatbot import authentication_views 
+
 
 urlpatterns = [
     path('admin/', admin.site.urls),
     path('chatbot/', include("chatbot.urls")),
+
+    # New authentication URLs
+    path('login/', authentication_views.login_view, name='login'),
+    path('register/', authentication_views.register_view, name='register'),
+    path('logout/', authentication_views.logout_view, name='logout')
+    path('', authentication_views.login_view),  # Redirect home to login
     ]
