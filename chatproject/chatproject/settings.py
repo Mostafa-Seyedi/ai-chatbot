@@ -127,3 +127,30 @@ STATIC_URL = 'static/'
 # https://docs.djangoproject.com/en/5.1/ref/settings/#default-auto-field
 
 DEFAULT_AUTO_FIELD = 'django.db.models.BigAutoField'
+
+
+
+# Authentication Settings
+LOGIN_URL = 'login'  # Where to redirect when login is required
+LOGIN_REDIRECT_URL = 'chatbot'  # Where to redirect after successful login
+LOGOUT_REDIRECT_URL = 'login'  # Where to redirect after logout (optional)
+
+# Email Configuration for Password Recovery
+EMAIL_BACKEND = 'django.core.mail.backends.smtp.EmailBackend'
+
+# For Gmail SMTP (replace with your email settings)
+EMAIL_HOST = 'smtp.gmail.com'
+EMAIL_PORT = 587
+EMAIL_USE_TLS = True
+EMAIL_HOST_USER = 'your_email@gmail.com'  # Replace with your email
+EMAIL_HOST_PASSWORD = 'your_app_password'  # Replace with your app password
+
+# Default sender email
+DEFAULT_FROM_EMAIL = 'your_email@gmail.com'  # Replace with your email
+
+# For development/testing (prints emails to console instead of sending)
+# Uncomment the line below if you want to test without real email sending
+# EMAIL_BACKEND = 'django.core.mail.backends.console.EmailBackend'
+
+# Password reset timeout (in seconds) - 1 hour = 3600 seconds
+PASSWORD_RESET_TIMEOUT = 3600
