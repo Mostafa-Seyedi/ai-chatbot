@@ -57,7 +57,7 @@ def chatbot(request):
                 # VALUES ('Hello', 'Hi there!', '2025-01-15 10:30:00');
                 
                 # Only show conversations from this user
-                user_conversation = Conversation.objects.filter(
+                user_conversations = Conversation.objects.filter(
                     user = request.user # Only get conversation from current user 
                     ).order_by('-timestamp')[:5] # Get last 5 conversations
 

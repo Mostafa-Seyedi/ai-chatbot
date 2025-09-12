@@ -16,6 +16,10 @@ class Conversation(models.Model):
     def __str__(self):
         return f"Conversation by {self.user.username if self.user else 'Anonymous'} at {self.timestamp}"
     
+    class Meta:
+        ordering = ['-timestamp']  # Always show newest conversations first
+
+
 # Optional : Srore extra user information
 class UserProfile(models.Model): 
     user = models.OneToOneField(User, on_delete=models.CASCADE)
@@ -26,4 +30,5 @@ class UserProfile(models.Model):
     chat_theme = models.CharField(max_length=20, default='light')
     created_at = models.DateField(auto_now_add=True)
 
-    
+    def __str__(self):
+        return f"Profile for {self.user.username}"
