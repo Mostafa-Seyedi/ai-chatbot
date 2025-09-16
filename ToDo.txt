@@ -1,0 +1,8 @@
+1- Check that the forget password, account registeration, login and etc work properly or not
+
+2- Add logout page also 
+
+3- So far I only focused on user-authentication. Next step is to create my own API 
+
+4- Cloude documentation is required 
+
