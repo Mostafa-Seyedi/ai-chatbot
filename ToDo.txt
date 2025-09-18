@@ -4,5 +4,6 @@
 
 3- So far I only focused on user-authentication. Next step is to create my own API 
 
-4- Cloude documentation is required 
+4- Claude documentation is required 
 
+5- Check that all the templates follow same structure
